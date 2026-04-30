@@ -1,0 +1,146 @@
+.app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Menu Styles */
+.menu-container {
+  width: 500px;
+  padding: 40px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.game-title {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 10px;
+  color: var(--color-primary);
+  text-shadow: 0 0 15px rgba(0, 243, 255, 0.6);
+  letter-spacing: 5px;
+  animation: pulse 4s infinite, glitch 10s infinite;
+}
+
+.game-subtitle {
+  font-size: 1.2rem;
+  color: var(--color-text-muted);
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.menu-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.sys-status {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+  font-family: var(--font-display);
+  letter-spacing: 1px;
+}
+
+/* Game Layout Styles */
+.game-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.hud {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 20;
+}
+
+.top-hud {
+  top: 0;
+  border-bottom: 1px solid var(--border-glow);
+  border-radius: 0 0 10px 10px;
+}
+
+.bottom-hud {
+  bottom: 0;
+  border-top: 1px solid var(--border-glow);
+  border-radius: 10px 10px 0 0;
+  justify-content: center;
+  padding: 20px;
+}
+
+.hud-item {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-shadow: 0 0 8px rgba(0, 243, 255, 0.5);
+  letter-spacing: 2px;
+}
+
+.play-area {
+  flex-grow: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 60px;
+  margin-bottom: 80px;
+}
+
+/* Tool Buttons (Weapons) */
+.tools {
+  display: flex;
+  gap: 15px;
+}
+
+.tool-btn {
+  background: rgba(16, 22, 38, 0.8);
+  border: 1px solid var(--color-text-muted);
+  color: var(--color-text-main);
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tool-btn:hover {
+  background: rgba(0, 243, 255, 0.2);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+}
+
+.tool-btn:active {
+  transform: scale(0.95);
+}
