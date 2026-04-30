@@ -6,24 +6,42 @@ function initAudio() {
   }
 }
 
-export function playCorrectSound() {
+export function playCorrectSound(laneIndex = 0) {
   try {
     initAudio();
-    const osc = audioCtx.createOscillator();
-    const gainNode = audioCtx.createGain();
     
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(500, audioCtx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(1000, audioCtx.currentTime + 0.1);
+    // Minor pentatonic scale frequencies starting at C4: C4, Eb4, F4, G4
+    const baseFrequencies = [261.63, 311.13, 349.23, 392.00]; 
+    const freq = baseFrequencies[laneIndex % 4];
+
+    // Oscillator 1 (Main Note)
+    const osc1 = audioCtx.createOscillator();
+    const gainNode1 = audioCtx.createGain();
+    osc1.type = 'sine';
+    osc1.frequency.setValueAtTime(freq, audioCtx.currentTime);
     
-    gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+    gainNode1.gain.setValueAtTime(0.6, audioCtx.currentTime);
+    gainNode1.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
     
-    osc.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
+    osc1.connect(gainNode1);
+    gainNode1.connect(audioCtx.destination);
     
-    osc.start();
-    osc.stop(audioCtx.currentTime + 0.15);
+    // Oscillator 2 (Harmonic / Bell tone)
+    const osc2 = audioCtx.createOscillator();
+    const gainNode2 = audioCtx.createGain();
+    osc2.type = 'triangle';
+    osc2.frequency.setValueAtTime(freq * 1.5, audioCtx.currentTime); // Perfect fifth harmonic
+    
+    gainNode2.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gainNode2.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+    
+    osc2.connect(gainNode2);
+    gainNode2.connect(audioCtx.destination);
+
+    osc1.start();
+    osc2.start();
+    osc1.stop(audioCtx.currentTime + 0.35);
+    osc2.stop(audioCtx.currentTime + 0.25);
   } catch (e) {
     console.error("Audio playback failed", e);
   }
@@ -32,21 +50,31 @@ export function playCorrectSound() {
 export function playIncorrectSound() {
   try {
     initAudio();
-    const osc = audioCtx.createOscillator();
+    
+    // Dissonant minor second chord
+    const osc1 = audioCtx.createOscillator();
+    const osc2 = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
     
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.2);
+    osc1.type = 'square';
+    osc1.frequency.setValueAtTime(110, audioCtx.currentTime); // A2
+    osc1.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.2);
+
+    osc2.type = 'sawtooth';
+    osc2.frequency.setValueAtTime(116.54, audioCtx.currentTime); // Bb2 (dissonant)
+    osc2.frequency.exponentialRampToValueAtTime(85, audioCtx.currentTime + 0.2);
     
-    gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+    gainNode.gain.setValueAtTime(0.4, audioCtx.currentTime);
     gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
     
-    osc.connect(gainNode);
+    osc1.connect(gainNode);
+    osc2.connect(gainNode);
     gainNode.connect(audioCtx.destination);
     
-    osc.start();
-    osc.stop(audioCtx.currentTime + 0.25);
+    osc1.start();
+    osc2.start();
+    osc1.stop(audioCtx.currentTime + 0.25);
+    osc2.stop(audioCtx.currentTime + 0.25);
   } catch (e) {
     console.error("Audio playback failed", e);
   }
